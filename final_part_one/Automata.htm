@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0047)http://bdcampbell.net/games/games/neighbor.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Gaming in JavaScript</title>
+</head>
+<body>
+	<div id="content_main">
+		<canvas id="myCanvas" width="1800" height="1800"></canvas>
+        <div id="animatedtext" style="position:absolute;left:100px;top:202px;width:400px;height:110px;z-index:520;color:#FFFFFF;font-size:48px;font-family:&#39;Trebuchet MS&#39;, Arial, Helvetica, sans-serif;background:transparent">
+			<span id="thetext">0</span> 
+		</div>        
+		<script language="javascript">
+			var square = new Array();
+			var row_size = 3;
+			var canvas = document.getElementById('myCanvas');
+      		var context = canvas.getContext('2d');
+				
+			window.onload = function() {
+			  init();
+			}			
+						
+			function init() {
+			  count = 0;
+			  speed = 10;
+			  y_pos = 26;
+			  x_pos = 26;
+			  score = 0;
+			  run();
+			}
+			
+function run() {
+	if(y_pos == 26) {
+		x_pos = 600 - ((row_size+1)/2)*8;
+		context.beginPath();
+		context.fillStyle = 'black';
+    	context.rect(x_pos+16, 12, 4, 4);
+    	context.fill();
+		context.beginPath();
+		context.fillStyle = 'black';
+      	context.rect(x_pos+8, 19, 4, 4);
+    	context.fill();
+		context.beginPath();
+		context.fillStyle = 'red';
+      	context.rect(x_pos+16, 19, 4, 4);
+    	context.fill();
+      	context.beginPath();
+		context.fillStyle = 'red';
+      	context.rect(x_pos+24, 19, 4, 4);
+    	context.fill();      
+	}
+	if(y_pos < 2000) {
+		square[count++] = false;
+		square[count++] = false;
+		square[count++] = true;
+		x_pos = 600 - ((row_size+1)/2)*8;
+		for (i=0; i<(row_size+2); i++) {
+			context.beginPath();
+			//8 conditions to test for - our automata
+			if(square[count-row_size-1]==false && square[count-row_size]==false && square[count-row_size+1]==false) {
+      			context.fillStyle = 'red';
+      			context.rect(x_pos, y_pos, 4, 4);
+      			context.fill();			
+				square[count++] = true;
+			} else if (square[count-row_size-1]==false && square[count-row_size]==false && square[count-row_size+1]==true) {
+      			context.fillStyle = 'red';
+      			context.rect(x_pos, y_pos, 4, 4);
+      			context.fill();		
+				square[count++] = true;			
+			} else if (square[count-row_size-1]==false && square[count-row_size]==true && square[count-row_size+1]==false) {
+      			context.fillStyle = 'red';
+      			context.rect(x_pos, y_pos, 4, 4);
+      			context.fill();		
+				square[count++] = true;			
+			} else if (square[count-row_size-1]==false && square[count-row_size]==true && square[count-row_size+1]==true) {
+      			context.fillStyle = 'black';
+      			context.rect(x_pos, y_pos, 4, 4);
+      			context.fill();		
+				square[count++] = false;			
+			} else if (square[count-row_size-1]==true && square[count-row_size]==false && square[count-row_size+1]==false) {
+      			context.fillStyle = 'black';
+      			context.rect(x_pos, y_pos, 4, 4);
+      			context.fill();
+				square[count++] = false;			
+			} else if (square[count-row_size-1]==true && square[count-row_size]==false && square[count-row_size+1]==true) {
+      			context.fillStyle = 'black';
+      			context.rect(x_pos, y_pos, 4, 4);
+      			context.fill();			
+				square[count++] = false;			
+			} else if (square[count-row_size-1]==true && square[count-row_size]==true && square[count-row_size+1]==false) {
+      			context.fillStyle = 'black';
+      			context.rect(x_pos, y_pos, 4, 4);
+      			context.fill();			
+				square[count++] = false;			
+			} else {
+      			context.fillStyle = 'red';
+      			context.rect(x_pos, y_pos, 4, 4);
+      			context.fill();		
+				square[count++] = true;			
+			}
+			x_pos = x_pos+8;
+		}
+		y_pos = y_pos+8;
+		row_size += 2;
+		if (square[count-1]) {
+			context.beginPath();
+			context.fillStyle = 'red';
+      		context.rect(900, 100, 100, 100);
+      		context.fill();
+		} else {
+			context.beginPath();
+			context.fillStyle = 'black';
+      		context.rect(900, 100, 100, 100);
+      		context.fill();
+		}
+		window.setTimeout("run()", 3);
+	}
+}			
+		</script>
+     </div>
+</body></html>
