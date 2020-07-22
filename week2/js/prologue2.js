@@ -105,6 +105,9 @@ function init_p2() {
 		document.getElementById('enemy' + i).style.left = enemies[i][0] + "px";
 		document.getElementById('enemy' + i).style.top = enemies[i][1] + "px";
 	}
+	
+	document.getElementById('scrollingBG').style.backgroundImage = "url('images/prologue2_background.png')";
+	document.getElementById('plats_image').style.backgroundImage = "url('images/prologue2_platforms.png');
 }	
 
 function prologue2() {
