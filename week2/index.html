@@ -13,11 +13,11 @@
 <body onclick="shoot()">
     <audio id="laser" src="audio/laser.mp3"></audio>
     <canvas id="mycanvas" width="2000" height="800" style="position:absolute;left:0px;top:126px;z-index:710;background-color:transparent"></canvas>
-     <div id="plats_image" style="position: absolute; top: 30px; left: 0px; width: 1100px; height: 790px; background-image: url('images/platforms.png'); background-size: 100% 100%; z-index: 1000"></div>
+    <div id="plats_image" style="position: absolute; top: 30px; left: 0px; width: 1100px; height: 790px; background-image: url('images/platforms.png'); background-size: 100% 100%; z-index: 1000"></div>
     <div style="position:absolute;top:0px;left:1100px;width:1000px;height:1000px;background:white;z-index:1000"></div>
     <div id="content_main">
         <div id="background" style="position:absolute;left:0px;top:0px;px; width:9000px;height:700px;z-index:1">
-            <img style="position:relative;top:40px;left:-50px;opacity:1.0;visibility:visible;z-index:1" src="images/Medieval countryside.png" alt="Photo" id="level1_image" width="2200" height="790" />
+            <!--img style="position:relative;top:40px;left:-50px;opacity:1.0;visibility:visible;z-index:1" src="images/Medieval countryside.png" alt="Photo" id="level1_image" width="2200" height="790" /-->
             <div id="the_enemies" style="z-index:700"></div>
             <div id="the_bullets" style="z-index:740"></div>
             <div id="healthbar" style="z-index:740;width:10px;background-color:red;height:800px;position:absolute;left:1080px;top:40px"></div>
@@ -37,12 +37,15 @@
             <div id="game over" style="position:absolute;left:0px;top:0px;px; width:20000px;height:800px;z-index:10">
                 <img style="position:relative;top:40px;left:-50px;opacity:1.0;visibility:hidden;z-index:10" src="images/Game_Over.jpg" alt="Photo" id="game over" width="2200" height="790" />
             </div>
+            <div id="scrollingBG" style="position:absolute;width:2000px;height:760px;top:50px;left:50px;z-index:-50;background-image:url('images/prologue1_background.png');background-repeat:no-repeat;background-size: 120% 100%"></div>
             <div id="cutscene" style="position:absolute;left:0px;top:0px;px; width:20000px;height:800px;z-index:10">
                 <img style="position:relative;top:40px;left:-50px;opacity:1.0;visibility:hidden;z-index:10" src="images/cutscene_template.png" alt="Photo" id="cs_image" width="2200" height="790" />
             </div>
             <script language="javascript">
             var level = 0;
 			var sprite = document.getElementById("tobi");
+			var speed = 2.75;
+			var bgs = 0;
 			var x = 0;
 			var y = -100;
 			var bx = -50;
@@ -74,11 +77,6 @@
             var star_angle = 0;
             var canvas=document.getElementById('mycanvas');
             var context=canvas.getContext('2d');
-            for(i=0;i<plats.length;i++) {
-                context.beginPath();
-                context.fillStyle = "rgba(255, 255, 255, 0.4)";
-                context.fillRect(plats[i][0], plats[i][1], plats[i][2]-plats[i][0], plats[i][3]-plats[i][1]);  // where the rectangle platforms are (me)
-            }
 
             KeysDown = new Array(0,0,0,0,0,0); //asdwbj
 
@@ -145,7 +143,7 @@
 
             function shoot() {
             	//snd.play();
-                if(shot_taken < 0) {
+                if(shot_taken < 0 && bullets.length > 0) {
                     bullets[current_bullet][0] = tobi_x;
                     bullets[current_bullet][1] = tobi_y+64;
                     bullets[current_bullet][2] = bullet_direction;
@@ -166,34 +164,34 @@
                     document.getElementById('tobi_image').src="images/Bones_l.png";
                     if(checkValidMove(tobi_x - speed, tobi_y)) {
                         tobi_x = tobi_x - speed;
+                        bgs = -tobi_x;
                     }
                     if(tobi_x < 0) {
                         tobi_x = 2;
                     } else {
-                        tobi.style.left = tobi_x + "px";
+                        //tobi.style.left = tobi_x + "px";
                         bx += speed;
                         if(bx > 0) {
                             bx = 0;
                         }
                     }
-                    document.getElementById('level1_image').style.left = bx + "px";
                 }
                 if (KeysDown[2] == 1 && death_sequence < 0) { //d key is down
                     bullet_direction=1;
                     document.getElementById('tobi_image').src="images/Bones.png";
                     if(checkValidMove(tobi_x + speed, tobi_y)) {
                         tobi_x = tobi_x + speed;
+                        bgs = -tobi_x;
                     }
                     if(tobi_x > 950) {
                         tobi_x = 950;
                     } else {
-                        tobi.style.left = tobi_x + "px";
+                        //tobi.style.left = tobi_x + "px";
                         bx -= speed;
                         if(bx > 1000) {
                             bx = 1000;
                         }
                     }
-                    document.getElementById('level1_image').style.left = bx + "px";
                 }
                 if (KeysDown[3] == 1 && death_sequence < 0) { // w key is down
                     if (jumptime <= 0) {
@@ -215,7 +213,15 @@
             /* The frameloop function uses a Timeout to call itself every 150ms */
             function frameloop() {
                 process_keys();
-
+                
+				if(bgs < -930) {
+					bgs = 0;
+				}
+				document.getElementById('scrollingBG').style.backgroundPosition = bgs + "px 0px";
+				document.getElementById('plats_image').style.backgroundPosition = bgs + "px 0px";
+				for(j=0;j<enemies.length;j++) {
+					document.getElementById('enemy' + j).style.left = (bgs + enemies[j][0]) + "px";
+				}
                 star_angle = star_angle + Math.random()*1 + 6;
 
                 if(enemy_count == 0 && level==0) {
@@ -406,7 +412,7 @@
 
             function checkValidMove(x, y) {
                 for(i=0; i<plats.length; i++) {
-                    if(plats[i][0]-32 < x && plats[i][2] > x && plats[i][1] < y && plats[i][3]+20 > y) {
+                    if(bgs + plats[i][0]-32 < x && bgs + plats[i][2] > x && plats[i][1] < y && plats[i][3]+20 > y) {
                         return false;
                     }
                 }
