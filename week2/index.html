@@ -183,8 +183,8 @@
                         tobi_x = tobi_x + speed;
                         bgs = -tobi_x;
                     }
-                    if(tobi_x > 950) {
-                        tobi_x = 950;
+                    if(tobi_x > 9000) {
+                        tobi_x = 9000;
                     } else {
                         //tobi.style.left = tobi_x + "px";
                         bx -= speed;
@@ -214,9 +214,6 @@
             function frameloop() {
                 process_keys();
                 
-				if(bgs < -930) {
-					bgs = 0;
-				}
 				document.getElementById('scrollingBG').style.backgroundPosition = bgs + "px 0px";
 				document.getElementById('plats_image').style.backgroundPosition = bgs + "px 0px";
 				for(j=0;j<enemies.length;j++) {
@@ -424,12 +421,12 @@
                     return false;
                 }
                 for(i=0; i<plats.length; i++) {
-                    if(plats[i][0] < x && plats[i][2] > x && plats[i][1] - 10 < y && plats[i][3] + 10 > y) {
+                    if(bgs + plats[i][0] < x && plats[i][2] > x && plats[i][1] - 10 < y && plats[i][3] + 10 > y) {
                         return false;
                     }
                 }
                 for(i=0; i<enemies.length; i++) {
-                    if(enemies[i][0] < x && enemies[i][0] + 50 > x && enemies[i][1] < y && enemies[i][1] + 50 > y) {
+                    if(bgs + enemies[i][0] < x && bgs + enemies[i][0] + 50 > x && enemies[i][1] < y && enemies[i][1] + 50 > y) {
                         return false;
                     }
                 }
