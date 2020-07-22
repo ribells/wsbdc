@@ -1,4 +1,4 @@
-function init_p1() {
+function init_l2() {
 	
 	plats = [
 		[0,678,1000,718], //x_start, y_start, x_end, y_end
@@ -56,7 +56,7 @@ function init_p1() {
 	}
 }	
 
-function prologue1() {
-	init_p1();
+function level2() {
+	init_l2();
 	frameloop();
 }	
