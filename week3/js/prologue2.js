@@ -11,15 +11,16 @@ function init_p2() {
 	tobi_y = 629;	
 
 	plats = [
-		[0,678,1000,718], //x_start, y_start, x_end, y_end
-		[380,568,570,588],
-		[100,500,290,520],
-		[410,410,540,430],
-		[60,310,250,330],
-		[460,270,575,290],
-		[100,70,400,100],
-		[840,510,1000,532],
-		[720,340,870,364],
+		[0,678,10000,718], //x_start, y_start, x_end, y_end
+		[195,450,720, 500],
+		[50, 10, 650, 50],
+		[745, 250, 1300, 300],
+		[645, 100, 1050, 150],
+		[1600, 10, 2150, 40],
+		[1900, 400, 2400, 450],
+		[2450, 150, 2985, 200],
+		[1290, 100, 1680, 150],
+		[2200, 225, 2575, 325],
 	];
 	
 	enemies = [
@@ -106,7 +107,7 @@ function init_p2() {
 		document.getElementById('enemy' + i).style.top = enemies[i][1] + "px";
 	}
 	
-	document.getElementById('scrollingBG').style.backgroundImage = "url('images/prologue2_background.png')";
+	document.getElementById('scrollingBG').style.backgroundImage = "url('images/prologue2test.jpeg')";
 	document.getElementById('plats_image').style.backgroundImage = "url('images/prologue2_platforms.png')";
 }	
 

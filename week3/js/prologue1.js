@@ -1,17 +1,16 @@
 function init_p1() {
 	
 	plats = [
-		[0,688,9000,718], //x_start, y_start, x_end, y_end
-		[60,310,250,330],
-		[100,70,400,100],
-		[80,500,420,550],
-		[380,568,570,588],
-		[410,410,540,430],
-		[460,270,575,290],
-		[720,340,870,364],
-		[840,510,1000,532]
+		[0,688,900000,718], //x_start, y_start, x_end, y_end
+		[90,500,520,520],
+		[20,330,380,330],
+		[100,80,500,100],
+		[840,490,1000,532],
+		[690,340,870,364],
+		[1300,350,1600,412],
+		[1500,520,1835,732],
 	];	
-
+	
 	enemies = [
 		[0,0,1] //x, y, and [0:dead, 1:alive]
 	];
@@ -36,7 +35,7 @@ function init_p1() {
 	
 	for(i=0;i<enemies.length;i++) {
 		if(i<10) {
-			document.getElementById('the_enemies').innerHTML += '<div id="enemy' + i + '" style="position:absolute;top:0px;left:0px;z-index:700"><img id="enemy_image' + i + '" src="images/bear.gif" width="120" style="position:relative;top:12px" /></div>';
+			document.getElementById('the_enemies').innerHTML += '<div id="enemy' + i + '" style="position:absolute;top:0px;left:0px;z-index:700"><img id="enemy_image' + i + '" src="images/bear.png" width="120" style="position:relative;top:12px" /></div>';
 		} else {
 			document.getElementById('the_enemies').innerHTML += '<div id="enemy' + i + '" style="position:absolute;top:0px;left:0px;z-index:700"><img id="enemy_image' + i + '" src="images/Knight_melee.png" width="90" style="position:relative;top:12px" /></div>';
 		}
@@ -55,7 +54,7 @@ function init_p1() {
 		document.getElementById('enemy' + i).style.top = enemies[i][1] + "px";
 	}
 	
-	document.getElementById('scrollingBG').style.backgroundImage = "url('images/prologue1_background.png')";
+	document.getElementById('scrollingBG').style.backgroundImage = "url('images/prologue1.jpeg')";
 	document.getElementById('plats_image').style.backgroundImage = "url('images/prologue1_platforms.png')";
 }	
 
