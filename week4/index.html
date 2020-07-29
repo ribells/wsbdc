@@ -18,8 +18,8 @@
     <div id="content_main">
 	<div id="the_enemies" style="z-index:700"></div>
 	<div id="the_bullets" style="z-index:740"></div>
-	<div id="healthbar" style="z-index:740;width:10px;background-color:red;height:800px;position:absolute;left:1080px;top:40px"></div>
-	<div id="green_knight_healthbar" style="z-index:740;width:10px;background-color:green;height:800px;position:absolute;left:20px;top:40px"></div>
+	<div id="healthbar" style="z-index:740;width:20px;background-color:red;height:800px;position:absolute;left:1080px;top:40px"></div>
+	<div id="green_knight_healthbar" style="z-index:740;width:20px;background-color:green;height:800px;position:absolute;left:0px;top:40px"></div>
 	<div id="tobi" style="position:absolute;top:629px;left:50px;z-index:1001">
 		<img id="tobi_image" src="images/tobi.png" style="position:relative;top:-30px;width:160px" />
 	</div>
@@ -38,7 +38,7 @@
 	<div id="game over" style="position:absolute;left:0px;top:0px;px; width:20000px;height:800px;z-index:10">
 		<img style="position:relative;top:40px;left:-50px;opacity:1.0;visibility:hidden;z-index:10" src="images/Game_Over.jpg" alt="Photo" id="game over" width="2200" height="790" />
 	</div>
-	<div id="scrollingBG" style="position:absolute;width:2000px;height:760px;top:50px;left:50px;z-index:-50;background-image:url('images/prologue1.jpeg');background-repeat:no-repeat;background-size: 120% 100%"></div>
+	<div id="scrollingBG" style="position:absolute;width:2000px;height:760px;top:50px;left:20px;z-index:-50;background-image:url('images/prologue1.jpeg');background-repeat:no-repeat;background-size: 120% 100%"></div>
 	<div id="cutscene" style="position:absolute;left:0px;top:0px;px; width:20000px;height:800px;z-index:10">
 		<img style="position:relative;top:40px;left:-50px;opacity:1.0;visibility:hidden;z-index:10" src="images/cutscene_template.png" alt="Photo" id="cs_image" width="2200" height="790" />
 	</div>
@@ -46,7 +46,7 @@
 	var level = 0;
 	var sprite = document.getElementById("tobi");
 	var speed = 2.75;
-	var bgs = 0;
+	var bgs = 0;  //the number of pixels the background has scrolled based on Tobi's movement to right or left
 	var x = 0;
 	var y = -100;
 	var bx = -50;
