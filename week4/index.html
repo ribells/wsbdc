@@ -1,0 +1,457 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Platformer Game</title>
+    <script src="js/jquery.js"></script>
+	<script src="js/prologue1.js"></script>
+	<script src="js/prologue2.js"></script>
+	<script src="js/level1.js"></script>
+	<script src="js/level2.js"></script>
+	<script src="js/level3.js"></script>
+</head>
+<body onclick="shoot()">
+    <audio id="laser" src="audio/laser.mp3"></audio>
+    <canvas id="mycanvas" width="2000" height="800" style="position:absolute;left:0px;top:126px;z-index:710;background-color:transparent"></canvas>
+    <div id="plats_image" style="position: absolute; top: 30px; left: 0px; width: 3000px; height: 790px; background-image: url('images/prologue1_platforms.png'); background-size: 100% 100%; z-index: 50"></div>
+    <div style="position:absolute;top:0px;left:1100px;width:1000px;height:1000px;background:white;z-index:1000"></div>
+    <div id="content_main">
+	<div id="the_enemies" style="z-index:700"></div>
+	<div id="the_bullets" style="z-index:740"></div>
+	<div id="healthbar" style="z-index:740;width:10px;background-color:red;height:800px;position:absolute;left:1080px;top:40px"></div>
+	<div id="green_knight_healthbar" style="z-index:740;width:10px;background-color:green;height:800px;position:absolute;left:20px;top:40px"></div>
+	<div id="tobi" style="position:absolute;top:629px;left:50px;z-index:1001">
+		<img id="tobi_image" src="images/tobi.png" height="100" width="72" style="position:relative;top:28px" />
+	</div>
+	<div id="anthus" style="position:absolute;top:560px;left:100px;z-index:1001">
+		<img id="anthus_image" src="images/Knight_melee.png" height="100" width="72" style="position:relative;top:28px;z-index:1001" />
+	</div>
+	<div id="green_knight" style="position:absolute;top:300px;left:300px;z-index:700">
+		<img id="green_knight_image" src="images/KnightGeneral.gif" height="200" width="140" style="position:relative;top:8px;visibility:hidden" />
+	</div>
+	<div id="green_knight" style="position:absolute;top:300px;left:300px;z-index:700">
+		<img id="green_knight_damage" src="images/KnightGeneral_damaged.png" height="200" width="140" style="position:relative;top:8px;visibility:hidden" />
+	</div>
+	<div id="animatedtext" style="position:absolute;left:760px;top:100px;width:400px;height:110px;z-index:520;color:#000000;font-size:48px;font-family:'Trebuchet MS', Arial, Helvetica, sans-serif;background:transparent">
+		SCORE: <span id="thescore">0</span><br />
+	</div>
+	<div id="game over" style="position:absolute;left:0px;top:0px;px; width:20000px;height:800px;z-index:10">
+		<img style="position:relative;top:40px;left:-50px;opacity:1.0;visibility:hidden;z-index:10" src="images/Game_Over.jpg" alt="Photo" id="game over" width="2200" height="790" />
+	</div>
+	<div id="scrollingBG" style="position:absolute;width:2000px;height:760px;top:50px;left:50px;z-index:-50;background-image:url('images/prologue1.jpeg');background-repeat:no-repeat;background-size: 120% 100%"></div>
+	<div id="cutscene" style="position:absolute;left:0px;top:0px;px; width:20000px;height:800px;z-index:10">
+		<img style="position:relative;top:40px;left:-50px;opacity:1.0;visibility:hidden;z-index:10" src="images/cutscene_template.png" alt="Photo" id="cs_image" width="2200" height="790" />
+	</div>
+	<script language="javascript">
+	var level = 0;
+	var sprite = document.getElementById("tobi");
+	var speed = 2.75;
+	var bgs = 0;
+	var x = 0;
+	var y = -100;
+	var bx = -50;
+	var by = 0;
+	var score = 0;
+	var health = 0;
+	var green_knight_health = 800;
+	var tobi_x = 50; tobi_y = 629;
+	var anthus; //Supporting character for Tobi (behaves like a good green knight)
+	var anthus_x = 100; anthus_y = 589;
+	var green_knight_x = 300; green_knight_y = 300;
+	var speed = 1.25;
+	var shot_taken = -1;
+	var death_sequence = -1;
+	var bullet_direction=1;
+	var jumptime = 1;
+	var jump_speed = 3;
+	var falling = 2;
+	var canvas=document.getElementById('mycanvas');
+	var context=canvas.getContext('2d');
+	var radius = 8;
+	
+	var plats = [];
+	var enemies = [];
+	var bullets = [];
+	var e_bullets = [];
+	var enemy_count = 0;
+	var current_bullet = 0;
+	var current_e_bullet = 0;
+	var star_angle = 0;
+	var canvas=document.getElementById('mycanvas');
+	var context=canvas.getContext('2d');
+
+	KeysDown = new Array(0,0,0,0,0,0); //asdwbj
+
+	window.onload = function() {
+		init();
+	}
+
+	$(document.body).keydown(function (evt) {
+		actualkey=String.fromCharCode(evt.keyCode);
+		if(actualkey=="A") {
+			KeysDown[0] = 1;
+		}
+		if(actualkey=="S") {
+			KeysDown[1] = 1;
+		}
+		if(actualkey=="D") {
+			KeysDown[2] = 1;
+		}
+		if(actualkey=="W") {
+			KeysDown[3] = 1;
+		}
+		if(actualkey=="B") {
+			KeysDown[4] = 1;
+		}
+		if(actualkey=="J") {
+			KeysDown[5] = 1;
+		}
+	});
+	/* audio
+	var snd = new Audio("audio/whoosh.wav");
+	var bg_sound = new Audio("audio/8-bit music.wav");
+	var ai = new Array(0,0,1,1);
+	var ai_index = 0;
+	bg_sound.play();
+	bg_sound.loop = true;
+	bg_sound.volume = 0.15;
+	var msc = new Audio ("audio/8 Bit Battle Song.wav");
+	*/
+	$(document.body).keyup(function (evt) {
+		actualkey=String.fromCharCode(evt.keyCode);
+		if(actualkey=="A") {
+			KeysDown[0] = 0;
+		}
+		if(actualkey=="S") {
+			KeysDown[1] = 0;
+		}
+		if(actualkey=="D") {
+			KeysDown[2] = 0;
+		}
+		if(actualkey=="W") {
+			KeysDown[3] = 0;
+		}
+		if(actualkey=="B") {
+			KeysDown[4] = 0;
+		}
+		if(actualkey=="J") {
+			KeysDown[5] = 0;
+		}
+	});
+
+	function init() {
+		prologue1();
+	}
+
+	function shoot() {
+		//snd.play();
+		if(shot_taken < 0 && bullets.length > 0) {
+			bullets[current_bullet][0] = tobi_x;
+			bullets[current_bullet][1] = tobi_y+64;
+			bullets[current_bullet][2] = bullet_direction;
+			current_bullet++;
+			if(current_bullet >= bullets.length) {
+				current_bullet=0;
+			}
+			shot_taken = 20;
+			document.getElementById("laser").play();
+		}
+	}
+
+	function process_keys() {
+		c = document.getElementById('clyde');
+		tobi = document.getElementById('tobi');
+		if (KeysDown[0] == 1 && death_sequence < 0) { // a key is down
+			bullet_direction=-1;
+			document.getElementById('tobi_image').src="images/tobi_l.png";
+			if(checkValidMove(tobi_x - speed, tobi_y)) {
+				tobi_x = tobi_x - speed;
+				bgs = -tobi_x;
+			}
+			if(tobi_x < 0) {
+				tobi_x = 2;
+			} else {
+				//tobi.style.left = tobi_x + "px";
+				bx += speed;
+				if(bx > 0) {
+					bx = 0;
+				}
+			}
+		}
+		if (KeysDown[2] == 1 && death_sequence < 0) { //d key is down
+			bullet_direction=1;
+			document.getElementById('tobi_image').src="images/tobi_r.png";
+			if(checkValidMove(tobi_x + speed, tobi_y)) {
+				tobi_x = tobi_x + speed;
+				bgs = -tobi_x;
+			}
+			if(tobi_x > 9000) {
+				tobi_x = 9000;
+			} else {
+				//tobi.style.left = tobi_x + "px";
+				bx -= speed;
+				if(bx > 1000) {
+					bx = 1000;
+				}
+			}
+		}
+		if (KeysDown[3] == 1 && death_sequence < 0) { // w key is down
+			if (jumptime <= 0) {
+				document.getElementById('tobi_image').src="images/tobi.png";
+				jumptime=180;
+			}
+		}
+		for(c=0; c<enemies.length; c++) {
+			if(hit_test(tobi_x+20, enemies[c][0]+20, tobi_y+32, enemies[c][1], 40) && enemies[c][2]==1) {
+				enemies[c][2]=0;
+				score -= 40;
+				document.getElementById('thescore').innerHTML = score;
+				document.getElementById('enemy_image' + c).style.visibility = "hidden";
+				enemy_count = enemy_count - 1;
+			}
+		}
+	}
+
+	/* The frameloop function uses a Timeout to call itself every 150ms */
+	function frameloop() {
+		process_keys();
+		
+		document.getElementById('scrollingBG').style.backgroundPosition = bgs + "px 0px";
+		document.getElementById('plats_image').style.backgroundPosition = bgs + "px 0px";
+		for(j=0;j<enemies.length;j++) {
+			document.getElementById('enemy' + j).style.left = (bgs + enemies[j][0]) + "px";
+		}
+		
+		//code for anthus behavior
+		anthus_x = tobi_x + bgs + 100;
+		anthus_y = tobi_y - 100;
+		
+		document.getElementById('anthus').style.left = anthus_x + "px";
+		document.getElementById('anthus').style.top = anthus_y + "px";
+		
+		star_angle = star_angle + Math.random()*1 + 6;
+
+		if(enemy_count == 0 && level==0) {
+			level = 1;
+			prologue2();
+		} else if(enemy_count == 0 && level==1) {
+			//msc.play ();
+			//bg_sound.pause ();
+			document.getElementById('green_knight_image').style.visibility = 'visible';
+			enemy_count--;
+		} else if(enemy_count < 0 && level==1) {
+			green_knight_x = green_knight_x + (tobi_x - green_knight_x)*0.0002;
+			document.getElementById('green_knight').style.left = green_knight_x + "px";
+			green_knight_y = green_knight_y + ((tobi_y+40) - green_knight_y)*0.0004;
+			document.getElementById('green_knight').style.top = green_knight_y + "px";
+			green_knight_health = green_knight_health;
+			document.getElementById('green_knight_healthbar').style.height = "" + green_knight_health + "px";
+			if(death_sequence == 0) {
+				document.getElementById('green_knight_image').src="images/KnightGeneral.gif";
+			}
+		}
+
+		if(jumptime > 0) {
+			if(jumptime > 90) {
+				if(checkValidMove(tobi_x, tobi_y - jump_speed)) {
+					tobi_y = tobi_y - jump_speed;
+				}
+			} else {
+				if(checkValidMove(tobi_x, tobi_y + jump_speed)) {
+					tobi_y = tobi_y + jump_speed;
+				} else {
+					jumptime = 0;
+				}
+			}
+			jumptime--;
+			falling=-1;
+		} else {
+			falling=1;
+		}
+
+		if(falling==1) {
+			if(checkValidMove(tobi_x, tobi_y + 1)) {
+				tobi_y = tobi_y + 1;
+			}
+		}
+		//UPDATE DEMONS ATTACK
+		for(j=0;j<enemies.length;j++) {
+			if(enemy_count > 9) {
+				if(enemies[10][2] > 1) {
+					enemies[10][1] = enemies[10][1] + ((tobi_y+100) - enemies[10][1])*0.0005;
+					document.getElementById('enemy' + 10).style.top = enemies[10][1] + "px";
+					enemies[10][0] = enemies[10][0] + ((tobi_x) - enemies[10][0])*0.0005;
+					document.getElementById('enemy' + 10).style.left = enemies[10][0] + "px";
+				}
+			}
+			if(Math.random() < 0.002 && enemies[j][2] > 0 && level > 0) {
+				e_bullets[current_e_bullet][0] = enemies[j][0];
+				e_bullets[current_e_bullet][1] = enemies[j][1]+34;
+				dir = Math.floor(Math.random()*2);
+				if(e_bullets[current_e_bullet][2]==-1) {
+					if(dir==0 && enemies[j][0] > tobi_x) {
+						dir=2;
+					} else if(dir==1 && enemies[j][1] < tobi_y) {
+						dir=3;
+					}
+					e_bullets[current_e_bullet][2] = dir;
+					current_e_bullet++;
+					if(current_e_bullet >= e_bullets.length) {
+						current_e_bullet = 0;
+					}
+				}
+			}
+		}
+		//UPDATE BULLETS FIRED BY OPPONENTS
+		for(j=0;j<e_bullets.length;j++) {
+			if(enemy_count < 0) {
+				if(e_bullets[j][2] == -1) {
+					// if (Math.random () < 0.002) {
+					e_bullets[j][0] = green_knight_x;
+					e_bullets[j][1] = green_knight_y + 40;
+					e_bullets[j][2] = Math.floor(Math.random() * 4);
+					// }
+				}
+			}
+			if(enemy_count < 0) {
+				e_bullets[j][0] += (1.5 * (tobi_x - green_knight_x) / 200); //X movement
+				e_bullets[j][1] += (1.5 * (tobi_y - green_knight_y) / 200); //Y movement
+			} else {
+				if(e_bullets[j][2] == 0) {
+					e_bullets[j][0] += 3;
+				} else if(e_bullets[j][2] == 2) {
+					e_bullets[j][0] -= 3;
+				} else if(e_bullets[j][2] == 1) {
+					e_bullets[j][1] -= 3;
+				} else if(e_bullets[j][2] == 3) {
+					e_bullets[j][1] += 3;
+				}
+			}
+			if(hit_test(e_bullets[j][0],tobi_x+20,e_bullets[j][1],tobi_y+72, 40)) {
+				e_bullets[j][2] = -1;
+				e_bullets[j][0] = -1000;
+				e_bullets[j][1] = -1000;
+				score = score - 80;
+				document.getElementById('thescore').innerHTML = score;
+				document.getElementById('tobi_image').src="images/Bones_death.png";
+				health = health - 80;
+				document.getElementById('healthbar').style.height = "" + (800 + health) + "px";
+				death_sequence=100;
+			}
+			if (health <= -800) {
+				document.getElementById('plats_image').style.backgroundImage = "url('images/lose.png')";
+				game_active = -1;
+			}
+			if(e_bullets[j][0] > 1000 || e_bullets[j][0] < 0 || e_bullets[j][1] > 820 || e_bullets[j][1] < 0) {
+				e_bullets[j][2] = -1;
+				e_bullets[j][0] = -1000;
+				e_bullets[j][1] = -1000;
+			}
+			document.getElementById('e_bullet' + j).style.left = e_bullets[j][0] + "px";
+			document.getElementById('e_bullet' + j).style.top = e_bullets[j][1] + "px";
+			document.getElementById('e_bullet' + j).style.transform = "rotate(" + star_angle + "deg)";
+		}
+		//UPDATE BULLETS SHOT BY tobi
+		for(j=0;j<bullets.length;j++) {
+			if(checkValidMove(bullets[j][0] + 5*bullets[j][2], bullets[j][1]-110)) {
+				bullets[j][0] += 5*bullets[j][2];
+			} else {
+				bullets[j][1] = -1000;
+			}
+			if(bullets[j][0] > 1000) {
+				bullets[j][0] = 0;
+				bullets[j][1] = -1000;
+			} else if(bullets[j][0] < 0) {
+				bullets[j][0] = 1000;
+				bullets[j][1] = -1000;
+			}
+			for(k=0;k<enemies.length;k++) {
+				if(hit_test(bullets[j][0],enemies[k][0],bullets[j][1],enemies[k][1]+50, 40)) {
+					enemies[k][0]=-1000;
+					enemies[k][1]=-1000;
+					enemies[k][2]=0;
+					if(enemies[k][2]==2) {
+						//find a new attack enemy
+						found=false;
+						for(idx=0;idx<enemies.length;idx++) {
+							if(!found) {
+								if(enemies[idx][2]==1) {
+									enemies[idx][2]=2;
+									found=true;
+								}
+							}
+						}
+					}
+					document.getElementById('enemy' + k).style.visibility = "hidden";
+					bullets[j][1]=-1000;
+					score += 100;
+					document.getElementById('thescore').innerHTML = score;
+					enemy_count--;
+				}
+				if(enemy_count < 0) {
+					if(hit_test(bullets[j][0],green_knight_x - 30,bullets[j][1],green_knight_y+124,100)) {
+						document.getElementById('green_knight_image').src="images/KnightGeneral_damaged.png";
+						death_sequence=100;
+						bullets[j][1]=-1000;
+						score += 100;
+						document.getElementById('thescore').innerHTML = score;
+						green_knight_health -= 1000;
+						document.getElementById('green_knight_healthbar').style.height = "" + ( 800 + green_knight_health) + "px";
+						if (green_knight_health = -400) {
+							e_bullet_speed = 50;
+						}
+						if (green_knight_health <= -800) {
+							document.getElementById('plats_image').style.backgroundImage = "url('images/win.png')";
+							game_active = -1;
+						}
+					}
+				}
+			}
+			document.getElementById('bullet' + j).style.left = bullets[j][0] + "px";
+			document.getElementById('bullet' + j).style.top = bullets[j][1] + "px";
+		}
+		shot_taken--;
+		death_sequence--;
+		tobi.style.top = tobi_y + "px";
+
+		window.setTimeout("frameloop()", 5);
+	}
+
+	function checkValidMove(x, y) {
+		for(i=0; i<plats.length; i++) {
+			if(bgs + plats[i][0]-32 < x && bgs + plats[i][2] > x && plats[i][1] < y && plats[i][3]+20 > y) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	function checkValidLocation(x, y) {
+		if(y > 620) {
+			return false;
+		}
+		for(i=0; i<plats.length; i++) {
+			if(bgs + plats[i][0] < x && plats[i][2] > x && plats[i][1] - 10 < y && plats[i][3] + 10 > y) {
+				return false;
+			}
+		}
+		for(i=0; i<enemies.length; i++) {
+			if(bgs + enemies[i][0] < x && bgs + enemies[i][0] + 50 > x && enemies[i][1] < y && enemies[i][1] + 50 > y) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	function hit_test(x0,x1,y0,y1,t) {
+		//alert(Math.sqrt((x0-x1)*(x0-x1) + (y0-y1)*(y0-y1)));
+		if(Math.sqrt((x0-x1)*(x0-x1) + (y0-y1)*(y0-y1)) < t) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	</script>
+	</div>
+</body>
+</html>
