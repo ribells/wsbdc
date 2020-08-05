@@ -9,6 +9,7 @@
 	<script src="js/level1.js"></script>
 	<script src="js/level2.js"></script>
 	<script src="js/level3.js"></script>
+    <script src="js/crabboss.js"></script>
 </head>
 <body onclick="shoot()">
     <audio id="laser" src="audio/laser.mp3"></audio>
@@ -46,7 +47,7 @@
 		<img style="position:relative;top:40px;left:-50px;opacity:1.0;visibility:hidden;z-index:10" src="images/cutscene_template.png" alt="Photo" id="cs_image" width="2200" height="790" />
 	</div>
 	<script language="javascript">
-	var level = 0;
+	var level = 2;
 	var sprite = document.getElementById("tobi");
 	var speed = 2.75;
 	var bgs = 0;  //the number of pixels the background has scrolled based on Tobi's movement to right or left
@@ -144,7 +145,8 @@
 	});
 
 	function init() {
-		prologue1();
+		//prologue1();
+		level1();
 	}
 
 	function shoot() {
@@ -255,16 +257,8 @@
 			//bg_sound.pause ();
 			document.getElementById('green_knight_image').style.visibility = 'visible';
 			enemy_count--;
-		} else if(enemy_count < 0 && level==1) {
-			green_knight_x = green_knight_x + (tobi_x - green_knight_x)*0.0002;
-			document.getElementById('green_knight').style.left = green_knight_x + "px";
-			green_knight_y = green_knight_y + ((tobi_y+40) - green_knight_y)*0.0004;
-			document.getElementById('green_knight').style.top = green_knight_y + "px";
-			green_knight_health = green_knight_health;
-			document.getElementById('green_knight_healthbar').style.height = "" + green_knight_health + "px";
-			if(death_sequence == 0) {
-				document.getElementById('green_knight_image').src="images/KnightGeneral.gif";
-			}
+		} else if(enemy_count < 0 && level>1) {
+			process_crab_boss(level);
 		}
 
 		if(jumptime > 0) {
