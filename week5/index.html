@@ -11,7 +11,7 @@
 	<script src="js/level3.js"></script>
     <script src="js/crabboss.js"></script>
 </head>
-<body onclick="shoot()">
+<body onclick="shoot('tobi')">
     <audio id="laser" src="audio/laser.mp3"></audio>
     <canvas id="mycanvas" width="2000" height="800" style="position:absolute;left:0px;top:126px;z-index:710;background-color:transparent"></canvas>
     <div id="plats_image" style="position: absolute; top: 30px; left: 0px; width: 3000px; height: 790px; background-image: url('images/prologue1_platforms.png'); background-size: 100% 100%; z-index: 50"></div>
@@ -145,15 +145,20 @@
 	});
 
 	function init() {
-		//prologue1();
+		//prologue2();
 		level1();
 	}
 
-	function shoot() {
+	function shoot(who) {
 		//snd.play();
 		if(shot_taken < 0 && bullets.length > 0) {
-			bullets[current_bullet][0] = tobi_x;
-			bullets[current_bullet][1] = tobi_y+64;
+			if(who=='tobi') {
+				bullets[current_bullet][0] = tobi_x;
+				bullets[current_bullet][1] = tobi_y+25;
+			} else {
+				bullets[current_bullet][0] = father_x;
+				bullets[current_bullet][1] = father_y+25;
+			}
 			bullets[current_bullet][2] = bullet_direction;
 			current_bullet++;
 			if(current_bullet >= bullets.length) {
@@ -177,7 +182,6 @@
 			if(tobi_x < 0) {
 				tobi_x = 2;
 			} else {
-				//tobi.style.left = tobi_x + "px";
 				bx += speed;
 				if(bx > 0) {
 					bx = 0;
@@ -361,6 +365,10 @@
 			document.getElementById('e_bullet' + j).style.left = e_bullets[j][0] + "px";
 			document.getElementById('e_bullet' + j).style.top = e_bullets[j][1] + "px";
 			document.getElementById('e_bullet' + j).style.transform = "rotate(" + star_angle + "deg)";
+		}
+		//UPDATE BULLETS SHOT BY father
+		if(level > 0 && Math.random() < .02) {
+			shoot('father');
 		}
 		//UPDATE BULLETS SHOT BY tobi
 		for(j=0;j<bullets.length;j++) {
