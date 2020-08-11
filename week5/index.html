@@ -231,7 +231,7 @@
 		}
 	}
 
-	/* The frameloop function uses a Timeout to call itself every 150ms */
+	/* The frameloop function uses a Timeout to call itself */
 	function frameloop() {
 		process_keys();
 		
@@ -454,7 +454,7 @@
 
 	function checkValidMove(x, y) {
 		for(i=0; i<plats.length; i++) {
-			if(bgs + plats[i][0]-32 < x && bgs + plats[i][2] > x && plats[i][1] < y && plats[i][3]+20 > y) {
+			if(bgs + plats[i][0] < x && bgs + plats[i][2] > x && plats[i][1] < y && plats[i][3] > y) {
 				return false;
 			}
 		}
@@ -479,7 +479,6 @@
 	}
 
 	function hit_test(x0,x1,y0,y1,t) {
-		//alert(Math.sqrt((x0-x1)*(x0-x1) + (y0-y1)*(y0-y1)));
 		if(Math.sqrt((x0-x1)*(x0-x1) + (y0-y1)*(y0-y1)) < t) {
 			return true;
 		} else {
