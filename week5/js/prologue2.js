@@ -1,5 +1,11 @@
 function init_p2() {
 
+	document.getElementById('scene_text').innerHTML = 
+	"After Tobi and Taikamolu kills the last enemy in their village, " +
+	"Saikamolu will show up alone in front of them<br/><br/>" +
+	"Then, Saikamolu will start to use black magic to kill Taikamolu " +
+	"and knock Tobi unconscious ";
+
 	x = 0;
 	y = -100;
 	bx = -50;
@@ -11,8 +17,8 @@ function init_p2() {
 	tobi_y = 629;	
 
 	plats = [
-		[0,678,10000,718], //x_start, y_start, x_end, y_end
-		[195,450,720, 500],
+		[0, 643, 10000, 718], //x_start, y_start, x_end, y_end
+		[195, 460, 720, 505],
 		[50, 10, 650, 50],
 		[745, 250, 1300, 300],
 		[645, 100, 1050, 150],
@@ -113,5 +119,6 @@ function init_p2() {
 
 function prologue2() {
 	init_p2();
+	cut_scene_active = true;
 	//frameloop();
 }	

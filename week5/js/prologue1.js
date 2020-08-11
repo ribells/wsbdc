@@ -60,6 +60,7 @@ function check_the_bear() {
 		if(current_platform == plats.length-1) {
 			level++;
 			prologue2();
+			return;
 		} else {
 			current_platform++;
 		}

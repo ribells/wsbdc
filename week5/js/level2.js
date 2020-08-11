@@ -1,5 +1,12 @@
 /* function init_p1() {
 	
+	document.getElementById('scene_text').innerHTML = 
+	"After Tobi kills the Bandit Leader, the rest of the bandits start to " +
+	"flee away from the forest<br/><br/>" +
+	"Tobi starts complaining towards Anthus about how irritating he was when " +
+	"he was fighting against the bandits<br/><br/>" +
+	"Anthus apologizes and begs to stay by his side";		
+	
 	plats = [
 		[0,678,1000,718], //x_start, y_start, x_end, y_end
 		[380,568,570,588],
@@ -58,6 +65,7 @@
 
 function prologue1() {
 	init_p1();
+	cut_scene_active = true;
 	frameloop();
 }	
 */

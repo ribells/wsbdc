@@ -1,4 +1,12 @@
 function init_l1() {
+
+	document.getElementById('scene_text').innerHTML = 
+	"After Tobi kills the Bandit Leader, the rest of the bandits start to " +
+	"flee away from the forest<br/><br/>" +
+	"Tobi starts complaining towards Anthus about how irritating he was when " +
+	"he was fighting against the bandits<br/><br/>" +
+	"Anthus apologizes and begs to stay by his side";	
+
 	x = 0;
 	y = -100;
 	bx = -50;
