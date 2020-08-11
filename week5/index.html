@@ -22,10 +22,10 @@
 	<div id="healthbar" style="z-index:740;width:20px;background-color:red;height:800px;position:absolute;left:1080px;top:40px"></div>
 	<div id="green_knight_healthbar" style="z-index:740;width:20px;background-color:green;height:800px;position:absolute;left:0px;top:40px"></div>
 	<div id="tobi" style="position:absolute;top:629px;left:50px;z-index:1001">
-		<img id="tobi_image" src="images/tobi.png" style="position:relative;top:-30px;width:160px" />
+		<img id="tobi_image" src="images/tobi_idle.gif" style="position:relative;top:-30px;width:160px" />
 	</div>
 	<div id="anthus" style="position:absolute;top:560px;left:100px;z-index:1001">
-		<img id="anthus_image" src="images/Knight_melee.png" height="100" width="72" style="position:relative;top:-30px;z-index:1001" />
+		<img id="anthus_image" src="images/Knight_melee.gif" height="100" width="72" style="position:relative;top:-30px;z-index:1001" />
 	</div>
 	<div id="father" style="position:absolute;top:560px;left:100px;z-index:1001">
 		<img id="anthus_image" src="images/KnightGeneral.gif" height="100" width="72" style="position:relative;top:-30px;z-index:1001" />
@@ -40,7 +40,7 @@
 		SCORE: <span id="thescore">0</span><br />
 	</div>
 	<div id="game over" style="position:absolute;left:0px;top:0px;px; width:20000px;height:800px;z-index:10">
-		<img style="position:relative;top:40px;left:-50px;opacity:1.0;visibility:hidden;z-index:10" src="images/Game_Over.jpg" alt="Photo" id="game over" width="2200" height="790" />
+		<img style="position:relative;top:40px;left:-50px;opacity:1.0;visibility:hidden;z-index:10" src="images/game_over.png" alt="Photo" id="game over" width="2200" height="790" />
 	</div>
 	<div id="scrollingBG" style="position:absolute;width:2000px;height:760px;top:50px;left:20px;z-index:-50;background-image:url('images/prologue1.jpeg');background-repeat:no-repeat;background-size: 120% 100%"></div>
 	<div id="cutscene" style="position:absolute;left:0px;top:0px;px; width:20000px;height:800px;z-index:10">
@@ -202,7 +202,7 @@
 		}
 		if (KeysDown[3] == 1 && death_sequence < 0) { // w key is down
 			if (jumptime <= 0) {
-				document.getElementById('tobi_image').src="images/tobi.png";
+				document.getElementById('tobi_image').src="images/tobi_idle.gif";
 				jumptime=180;
 			}
 		}
@@ -343,14 +343,15 @@
 				e_bullets[j][1] = -1000;
 				score = score - 80;
 				document.getElementById('thescore').innerHTML = score;
-				document.getElementById('tobi_image').src="images/Bones_death.png";
+				document.getElementById('tobi_image').src="images/tobi_damaged.png";
 				health = health - 80;
 				document.getElementById('healthbar').style.height = "" + (800 + health) + "px";
 				death_sequence=100;
 			}
 			if (health <= -800) {
-				document.getElementById('plats_image').style.backgroundImage = "url('images/lose.png')";
+				document.getElementById('plats_image').style.backgroundImage = "url('images/game_over.png')";
 				game_active = -1;
+				// var msc =new Audio ()
 			}
 			if(e_bullets[j][0] > 1000 || e_bullets[j][0] < 0 || e_bullets[j][1] > 820 || e_bullets[j][1] < 0) {
 				e_bullets[j][2] = -1;
