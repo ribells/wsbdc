@@ -1,12 +1,4 @@
 function init_l1() {
-
-	document.getElementById('scene_text').innerHTML = 
-	"After Tobi kills the Bandit Leader, the rest of the bandits start to " +
-	"flee away from the forest<br/><br/>" +
-	"Tobi starts complaining towards Anthus about how irritating he was when " +
-	"he was fighting against the bandits<br/><br/>" +
-	"Anthus apologizes and begs to stay by his side";	
-
 	x = 0;
 	y = -100;
 	bx = -50;
@@ -84,18 +76,18 @@ function init_l1() {
 	enemy_count = 10;
 
 	for(i=0;i<bullets.length;i++) {
-		document.getElementById('the_bullets').innerHTML += '<div id="bullet' + i + '" style="position:absolute;top:0px;left:0px;z-index:600"><img style="opacity:1.0; visibility:visible;" src="images/minecraftSwordBullet.png" alt="bullet" id="dot_image"></div>';
+		document.getElementById('the_bullets').innerHTML += '<div id="bullet' + i + '" style="position:absolute;top:0px;left:0px;z-index:600"><img style="opacity:1.0; visibility:visible;" src="images/arrow.png" alt="bullet" id="dot_image"></div>';
 		bullets[i][1] = -1000.0;
 	}
 
 	for(i=0;i<e_bullets.length;i++) {
-		document.getElementById('the_bullets').innerHTML += '<div id="e_bullet' + i + '" style="position:absolute;top:0px;left:0px;z-index:600"><img style="opacity:1.0; visibility:visible;" src="images/minecraftSwordBullet.png" alt="bullet"></div>';
+		document.getElementById('the_bullets').innerHTML += '<div id="e_bullet' + i + '" style="position:absolute;top:0px;left:0px;z-index:600"><img style="opacity:1.0; visibility:visible;" src="images/bandit_axe.png" alt="bullet"></div>';
 		e_bullets[i][1] = -1000.0;
 	}
 	
 	for(i=0;i<enemies.length;i++) {
 		if(i<10) {
-			document.getElementById('the_enemies').innerHTML += '<div id="enemy' + i + '" style="position:absolute;top:0px;left:0px;z-index:700"><img id="enemy_image' + i + '" src="images/bandit_melee.png" width="90" style="position:relative;top:12px" /></div>';
+			document.getElementById('the_enemies').innerHTML += '<div id="enemy' + i + '" style="position:absolute;top:0px;left:0px;z-index:700"><img id="enemy_image' + i + '" src="images/bandit_melee.gif" width="90" style="position:relative;top:12px" /></div>';
 		} else {
 			document.getElementById('the_enemies').innerHTML += '<div id="enemy' + i + '" style="position:absolute;top:0px;left:0px;z-index:700"><img id="enemy_image' + i + '" src="images/SoD_melee.png" width="90" style="position:relative;top:12px" /></div>';
 		}
@@ -114,11 +106,17 @@ function init_l1() {
 		document.getElementById('enemy' + i).style.top = enemies[i][1] + "px";
 	}
 	
-	document.getElementById('scrollingBG').style.backgroundImage = "url('images/prologue2test.jpeg')";
-	document.getElementById('plats_image').style.backgroundImage = "url('images/prologue2_platforms.png')";
+	document.getElementById('scrollingBG').style.backgroundImage = "url('images/level1_background.png')";
+	document.getElementById('plats_image').style.backgroundImage = "url('images/level1_platforms.png')";
 }	
 
 function level1() {
 	init_l1();
 	frameloop();
 }
+
+
+
+/* Questions:
+How do I change the touch sensor of the bullets that Tobi shoots?
+*/
