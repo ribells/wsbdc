@@ -81,7 +81,7 @@ function init_l1() {
 		[0,-1000,-1]
 	];
 	
-	enemy_count = 10;
+	enemy_count = -1;
 
 	for(i=0;i<bullets.length;i++) {
 		document.getElementById('the_bullets').innerHTML += '<div id="bullet' + i + '" style="position:absolute;top:0px;left:0px;z-index:600"><img style="opacity:1.0; visibility:visible;" src="images/arrow.png" alt="bullet" id="dot_image"></div>';
@@ -110,6 +110,9 @@ function init_l1() {
 			enemies[i][0] = plats[p][0]+(10*i);
 		}
 		enemies[i][1] = plats[p][1]+32;
+			enemies[i][0]=-1000;
+			enemies[i][1]=-1000;
+			enemies[i][2]=0;
 		document.getElementById('enemy' + i).style.left = enemies[i][0] + "px";
 		document.getElementById('enemy' + i).style.top = enemies[i][1] + "px";
 	}
