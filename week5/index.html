@@ -218,7 +218,7 @@
 			}
 		}
 		for(c=0; c<enemies.length; c++) {
-			if(hit_test(tobi_x+20, enemies[c][0]+20, tobi_y+32, enemies[c][1], 40) && enemies[c][2]==1) {
+			if(hit_test(tobi_x+20, enemies[c][0]+20, tobi_y+32, enemies[c][1], 40) && enemies[c][2]==1) {  // Change values for touch sensor
 				enemies[c][2]=0;
 				score -= 40;
 				document.getElementById('thescore').innerHTML = score;
@@ -264,7 +264,7 @@
 				father_y = tobi_y + 50;
 				document.getElementById('father').style.top = father_y + "px";
 				//Activate shots by father
-				if(Math.random() < .02) {
+				if(Math.random() < .01) {
 					shoot('father');
 				}
 			}
@@ -374,7 +374,11 @@
 				if (health <= -800) {
 					document.getElementById('plats_image').style.backgroundImage = "url('images/game_over.png')";
 					game_active = -1;
-					// var msc =new Audio ()
+					bg_sound.play();
+					bg_sound.loop = true;
+					bg_sound.volume = 0.15;
+					var msc = new Audio () ("audio/Game_Over");
+					msc.play();
 				}
 				if(e_bullets[j][0] > 1000 || e_bullets[j][0] < 0 || e_bullets[j][1] > 820 || e_bullets[j][1] < 0) {
 					e_bullets[j][2] = -1;
