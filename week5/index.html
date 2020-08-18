@@ -9,6 +9,7 @@
 	<script src="js/level1.js"></script>
 	<script src="js/level2.js"></script>
 	<script src="js/level3.js"></script>
+    <script src="js/powerup.js"></script>
     <script src="js/crabboss.js"></script>
 </head>
 <body onclick="shoot('tobi')">
@@ -22,19 +23,22 @@
 	<div id="healthbar" style="z-index:740;width:20px;background-color:red;height:800px;position:absolute;left:1080px;top:40px"></div>
 	<div id="green_knight_healthbar" style="z-index:740;width:20px;background-color:green;height:800px;position:absolute;left:0px;top:40px"></div>
 	<div id="tobi" style="position:absolute;top:629px;left:50px;z-index:1001">
-		<img id="tobi_image" src="images/tobi_idle.gif" style="position:relative;top:-30px;width:160px" />
+		<img id="tobi_image" src="images/tobi_idle.gif" style="position:relative;top:0px;width:100px" />
 	</div>
 	<div id="anthus" style="position:absolute;top:560px;left:100px;z-index:1001">
 		<img id="anthus_image" src="images/Knight_melee.gif" height="100" width="72" style="position:relative;top:-30px;z-index:1001" />
 	</div>
 	<div id="father" style="position:absolute;top:560px;left:100px;z-index:1001">
-		<img id="anthus_image" src="images/KnightGeneral.gif" height="100" width="72" style="position:relative;top:-30px;z-index:1001" />
+		<img id="father_image" src="images/Taikamolu.gif" height="120" width="90" style="position:relative;top:-30px;z-index:1001" />
 	</div>
-	<div id="green_knight" style="position:absolute;top:300px;left:300px;z-index:700">
-		<img id="green_knight_image" src="images/KnightGeneral.gif" height="200" width="140" style="position:relative;top:8px;visibility:hidden" />
+	<div id="green_knight" style="position:absolute;top:300px;left:300px;z-index:1001">
+		<img id="green_knight_image" src="images/KnightGeneral.gif" height="200" width="140" style="position:relative;top:8px;visibility:hidden;z-index:1001" />
 	</div>
-	<div id="green_knight" style="position:absolute;top:300px;left:300px;z-index:700">
+	<div id="green_knight" style="position:absolute;top:300px;left:300px;z-index:1001">
 		<img id="green_knight_damage" src="images/KnightGeneral_damaged.png" height="200" width="140" style="position:relative;top:8px;visibility:hidden" />
+	</div>
+	<div id="powerup" style="position:absolute;top:700px;left:600px;z-index:1001">
+		<img id="powerup_image" src="images/powerup.gif" height="60" width="80" style="position:relative;top:8px;visibility:hidden;z-index:1001" />
 	</div>
 	<div id="animatedtext" style="position:absolute;left:760px;top:100px;width:400px;height:110px;z-index:520;color:#000000;font-size:48px;font-family:'Trebuchet MS', Arial, Helvetica, sans-serif;background:transparent">
 		SCORE: <span id="thescore">0</span><br />
@@ -56,14 +60,13 @@
 	var level = 2;
 	var cut_scene_active = true;
 	var sprite = document.getElementById("tobi");
-	var speed = 2.75;
 	var bgs = 0;  //the number of pixels the background has scrolled based on Tobi's movement to right or left
 	var x = 0;
 	var y = -100;
 	var bx = -50;
 	var by = 0;
 	var score = 0;
-	var health = 0;
+	var health = 800;
 	var green_knight_health = 800;
 	var tobi_x = 50; tobi_y = 629;
 	var anthus; //Supporting character for Tobi (behaves like a good green knight)
@@ -160,11 +163,11 @@
 		//snd.play();
 		if(shot_taken < 0 && bullets.length > 0) {
 			if(who=='tobi') {
-				bullets[current_bullet][0] = tobi_x;
+				bullets[current_bullet][0] = tobi_x+bgs+50;
 				bullets[current_bullet][1] = tobi_y+25;
 			} else {
 				bullets[current_bullet][0] = father_x;
-				bullets[current_bullet][1] = father_y-25;
+				bullets[current_bullet][1] = father_y;
 			}
 			bullets[current_bullet][2] = bullet_direction;
 			current_bullet++;
@@ -218,7 +221,7 @@
 			}
 		}
 		for(c=0; c<enemies.length; c++) {
-			if(hit_test(tobi_x+20, enemies[c][0]+20, tobi_y+32, enemies[c][1], 40) && enemies[c][2]==1) {  // Change values for touch sensor
+			if(hit_test(tobi_x+20, enemies[c][0]+20, tobi_y+32, enemies[c][1], 40) && enemies[c][2]==1) {
 				enemies[c][2]=0;
 				score -= 40;
 				document.getElementById('thescore').innerHTML = score;
@@ -264,7 +267,7 @@
 				father_y = tobi_y + 50;
 				document.getElementById('father').style.top = father_y + "px";
 				//Activate shots by father
-				if(Math.random() < .01) {
+				if(Math.random() < .02) {
 					shoot('father');
 				}
 			}
@@ -282,6 +285,9 @@
 				enemy_count--;
 			} else if(enemy_count < 0 && level>1) {
 				process_crab_boss(level);
+				if(powerup_active >= 0) {
+					process_powerup(level);
+				}
 			}
 
 			if(jumptime > 0) {
@@ -317,7 +323,7 @@
 						document.getElementById('enemy' + 10).style.left = enemies[10][0] + "px";
 					}
 				}
-				if(Math.random() < 0.002 && enemies[j][2] > 0 && level > 0 && enemy_count >= 0) {
+				if(Math.random() < 0.002 && enemies[j][2] > 0 && level > 0) {
 					e_bullets[current_e_bullet][0] = enemies[j][0];
 					e_bullets[current_e_bullet][1] = enemies[j][1]+34;
 					dir = Math.floor(Math.random()*2);
@@ -336,10 +342,11 @@
 				}
 			}
 			//UPDATE BULLETS FIRED BY OPPONENTS
+			if(enemy_count < 0) {
+				process_crab_boss_weapons(level);
+			}
 			for(j=0;j<e_bullets.length;j++) {
-				if(enemy_count < 0) {
-					process_crab_boss_weapons(level);
-				} else {
+				if(enemy_count > -1) {
 					if(e_bullets[j][2] == 0) {
 						e_bullets[j][0] += 3;
 					} else if(e_bullets[j][2] == 2) {
@@ -354,21 +361,17 @@
 					e_bullets[j][2] = -1;
 					e_bullets[j][0] = -1000;
 					e_bullets[j][1] = -1000;
-					score = score - 80;
+					score = score - 10;
 					document.getElementById('thescore').innerHTML = score;
 					document.getElementById('tobi_image').src="images/tobi_damaged.png";
-					health = health - 80;
-					document.getElementById('healthbar').style.height = "" + (800 + health) + "px";
+					health = health - 10;
+					document.getElementById('healthbar').style.height = "" + health + "px";
 					death_sequence=100;
 				}
-				if (health <= -800) {
+				if (health <= 0) {
 					document.getElementById('plats_image').style.backgroundImage = "url('images/game_over.png')";
 					game_active = -1;
-					bg_sound.play();
-					bg_sound.loop = true;
-					bg_sound.volume = 0.15;
-					var msc = new Audio () ("audio/Game_Over");
-					msc.play();
+					// var msc =new Audio ()
 				}
 				if(e_bullets[j][0] > 1000 || e_bullets[j][0] < 0 || e_bullets[j][1] > 820 || e_bullets[j][1] < 0) {
 					e_bullets[j][2] = -1;
@@ -415,24 +418,6 @@
 						score += 100;
 						document.getElementById('thescore').innerHTML = score;
 						enemy_count--;
-					}
-					if(enemy_count < 0) {
-						if(hit_test(bullets[j][0],green_knight_x - 30,bullets[j][1],green_knight_y+124,100)) {
-							document.getElementById('green_knight_image').src="images/KnightGeneral_damaged.png";
-							death_sequence=100;
-							bullets[j][1]=-1000;
-							score += 100;
-							document.getElementById('thescore').innerHTML = score;
-							green_knight_health -= 1000;
-							document.getElementById('green_knight_healthbar').style.height = "" + ( 800 + green_knight_health) + "px";
-							if (green_knight_health = -400) {
-								e_bullet_speed = 50;
-							}
-							if (green_knight_health <= -800) {
-								document.getElementById('plats_image').style.backgroundImage = "url('images/win.png')";
-								game_active = -1;
-							}
-						}
 					}
 				}
 				document.getElementById('bullet' + j).style.left = bullets[j][0] + "px";
