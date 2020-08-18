@@ -12,7 +12,7 @@ function init_l1() {
 	bx = -50;
 	by = 0;
 	score = 0;
-	health = 0;
+	health = 800;
 	green_knight_health = 800;
 	tobi_x = 100; 
 	tobi_y = 629;	
@@ -45,17 +45,17 @@ function init_l1() {
 	];
             
 	bullets = [
-		[0,-1000,1], //x, y, and [0:not-active, 1:active]
-		[0,-1000,1],
-		[0,-1000,1],
-		[0,-1000,1],
-		[0,-1000,1],
-		[0,-1000,1],
-		[0,-1000,1],
-		[0,-1000,1],
-		[0,-1000,1],
-		[0,-1000,1],
-		[0,-1000,1]
+		[0,-1000,-1], //x, y, and [0:not-active, 1:active]
+		[0,-1000,-1],
+		[0,-1000,-1],
+		[0,-1000,-1],
+		[0,-1000,-1],
+		[0,-1000,-1],
+		[0,-1000,-1],
+		[0,-1000,-1],
+		[0,-1000,-1],
+		[0,-1000,-1],
+		[0,-1000,-1]
 	];
 	
 	e_bullets = [
@@ -84,18 +84,18 @@ function init_l1() {
 	enemy_count = -1;
 
 	for(i=0;i<bullets.length;i++) {
-		document.getElementById('the_bullets').innerHTML += '<div id="bullet' + i + '" style="position:absolute;top:0px;left:0px;z-index:600"><img style="opacity:1.0; visibility:visible;" src="images/arrow.png" alt="bullet" id="dot_image"></div>';
+		document.getElementById('the_bullets').innerHTML += '<div id="bullet' + i + '" style="position:absolute;top:0px;left:0px;z-index:600"><img style="opacity:1.0; visibility:visible;" src="images/minecraftSwordBullet.png" alt="bullet" id="dot_image"></div>';
 		bullets[i][1] = -1000.0;
 	}
 
 	for(i=0;i<e_bullets.length;i++) {
-		document.getElementById('the_bullets').innerHTML += '<div id="e_bullet' + i + '" style="position:absolute;top:0px;left:0px;z-index:600"><img style="opacity:1.0; visibility:visible;" src="images/bandit_axe.png" alt="bullet"></div>';
+		document.getElementById('the_bullets').innerHTML += '<div id="e_bullet' + i + '" style="position:absolute;top:0px;left:0px;z-index:600"><img style="opacity:1.0; visibility:visible;" src="images/minecraftSwordBullet.png" alt="bullet"></div>';
 		e_bullets[i][1] = -1000.0;
 	}
 	
 	for(i=0;i<enemies.length;i++) {
 		if(i<10) {
-			document.getElementById('the_enemies').innerHTML += '<div id="enemy' + i + '" style="position:absolute;top:0px;left:0px;z-index:700"><img id="enemy_image' + i + '" src="images/bandit_melee.gif" width="90" style="position:relative;top:12px" /></div>';
+			document.getElementById('the_enemies').innerHTML += '<div id="enemy' + i + '" style="position:absolute;top:0px;left:0px;z-index:700"><img id="enemy_image' + i + '" src="images/bandit_melee.png" width="90" style="position:relative;top:12px" /></div>';
 		} else {
 			document.getElementById('the_enemies').innerHTML += '<div id="enemy' + i + '" style="position:absolute;top:0px;left:0px;z-index:700"><img id="enemy_image' + i + '" src="images/SoD_melee.png" width="90" style="position:relative;top:12px" /></div>';
 		}
@@ -117,8 +117,8 @@ function init_l1() {
 		document.getElementById('enemy' + i).style.top = enemies[i][1] + "px";
 	}
 	
-	document.getElementById('scrollingBG').style.backgroundImage = "url('images/level1_background.png')";
-	document.getElementById('plats_image').style.backgroundImage = "url('images/level1_platforms.png')";
+	document.getElementById('scrollingBG').style.backgroundImage = "url('images/prologue2test.jpeg')";
+	document.getElementById('plats_image').style.backgroundImage = "url('images/prologue2_platforms.png')";
 }	
 
 function level1() {
