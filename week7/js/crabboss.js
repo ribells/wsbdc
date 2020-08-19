@@ -3,7 +3,6 @@ function process_crab_boss(level) {
 	if(powerup_active < 0) {
 		powerup_active = 0;
 	}
-	document.getElementById('powerup_image').style.visibility = "visible";
 	green_knight_x = green_knight_x + (tobi_x + bgs - green_knight_x)*0.0002;
 	document.getElementById('green_knight').style.left = green_knight_x + "px";
 	green_knight_y = green_knight_y + ((tobi_y+40) - green_knight_y)*0.0004;
@@ -38,7 +37,7 @@ function process_crab_boss(level) {
 function process_crab_boss_weapons(level) {
 	for(c=0;c<e_bullets.length;c++) {
 		if(e_bullets[c][2] == -1) {
-			if (Math.random () < 0.002) {
+			if (Math.random () < 0.005) {
 				e_bullets[c][0] = green_knight_x;
 				e_bullets[c][1] = green_knight_y + 40;
 				e_bullets[c][2] = Math.floor(Math.random() * 4);

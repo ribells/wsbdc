@@ -80,6 +80,13 @@ function init_l1() {
 		[0,-1000,-1],
 		[0,-1000,-1]
 	];
+
+	powerup = [
+		[0,0,0], //x, y, and [0:inactive, 1:active]
+		[0,0,0],
+		[0,0,0],
+		[0,0,0]
+    ];
 	
 	enemy_count = -1;
 
@@ -95,9 +102,9 @@ function init_l1() {
 	
 	for(i=0;i<enemies.length;i++) {
 		if(i<10) {
-			document.getElementById('the_enemies').innerHTML += '<div id="enemy' + i + '" style="position:absolute;top:0px;left:0px;z-index:700"><img id="enemy_image' + i + '" src="images/bandit_melee.png" width="90" style="position:relative;top:12px" /></div>';
+			document.getElementById('the_enemies').innerHTML += '<div id="enemy' + i + '" style="position:absolute;top:0px;left:0px;z-index:700"><img id="enemy_image' + i + '" src="images/bandit_melee.gif" width="90" style="position:relative;top:12px" /></div>';
 		} else {
-			document.getElementById('the_enemies').innerHTML += '<div id="enemy' + i + '" style="position:absolute;top:0px;left:0px;z-index:700"><img id="enemy_image' + i + '" src="images/SoD_melee.png" width="90" style="position:relative;top:12px" /></div>';
+			document.getElementById('the_enemies').innerHTML += '<div id="enemy' + i + '" style="position:absolute;top:0px;left:0px;z-index:700"><img id="enemy_image' + i + '" src="images/SoD_melee.gif" width="90" style="position:relative;top:12px" /></div>';
 		}
 	}
 	for (i=0;i<enemies.length;i++) {
@@ -119,6 +126,16 @@ function init_l1() {
 	
 	document.getElementById('scrollingBG').style.backgroundImage = "url('images/prologue2test.jpeg')";
 	document.getElementById('plats_image').style.backgroundImage = "url('images/prologue2_platforms.png')";
+	
+	for(var g=0;g<powerup.length;g++) {
+		var x = 20 + Math.floor(Math.random()*780);
+		var y = 20 + Math.floor(Math.random()*580);
+		document.getElementById('the_powerups').innerHTML += '<div id="powerup' + g + '" style="position:absolute;top:' + y + 'px;left:' + x + 'px;z-index:740"><img id="powerup_image' + g + '" src="images/powerup.gif" width="80" style="position:relative;visibility:hidden;" /></div>';
+		powerup[g][0] = x;
+		powerup[g][1] = y;
+
+		document.getElementById('powerup_image' + g).style.visibility = "visible";
+	}	
 }	
 
 function level1() {

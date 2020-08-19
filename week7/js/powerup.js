@@ -8,17 +8,31 @@ function process_powerup(level) {
 	if(powerup_countdown < 0) {
 		powerup_active = -1;
 	}
-	
-	document.getElementById('powerup').style.left = (powerup_x+bgs) + "px";
-	if(hit_test(powerup_x,tobi_x+20,powerup_y,tobi_y, 40)) {
-		powerup_y = -1000;
-		//roll dice to choose powerup (four choices available)
-		powerup_active = Math.floor(1+Math.random()*4);
-		powerup_countdown = 500;
+	for(var h=0;h<powerup.length;h++) {	
+		document.getElementById('powerup'+h).style.left = (powerup[h][0]+bgs) + "px";
+		
+		if(powerup_active < 1) {
+			if(hit_test(powerup[h][0],tobi_x+20,powerup[h][1],tobi_y, 40)) {
+				powerup[h][1] = -1000; //figure out how to delay for one second
+				//roll dice to choose powerup (four choices available)
+				powerup_active = Math.floor(1+Math.random()*4);
+				if(powerup_active == 1) {
+					document.getElementById('powerup_image'+h).src = "/images/adrenaline.png";
+				} else if(powerup_active == 2) {
+					document.getElementById('powerup_image'+h).src = "/images/speed_potion.png";
+				} else if(powerup_active == 3) {
+					document.getElementById('powerup_image'+h).src = "/images/poison.png";
+				} else if(powerup_active == 4) {
+					document.getElementById('powerup_image'+h).src = "/images/mindcontrol_potion.png";
+				}
+				powerup_countdown = 500;
+			}
+		}
+
+		document.getElementById('powerup'+h).style.top = (powerup[h][1]) + "px";
 	}
-	document.getElementById('powerup').style.top = (powerup_y) + "px";
 	
-	if(powerup_active==1) { //increase attack
+	if(powerup_active==1) { //adrenaline increase attack
 		for(e=0;e<bullets.length;e++) {
 			if(bullets[e][1] == -1000) { //find unused bullets
 				if (Math.random() < 0.002) {			
