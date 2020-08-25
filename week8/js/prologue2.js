@@ -17,21 +17,16 @@ function init_p2() {
 	tobi_y = 629;	
 
 	plats = [
-		[0,688,90000,718], //x_start, y_start, x_end, y_end
-		[90,500,520,520],
-		[0,300,380,330],
-		[200,86,550,106],
-		[650,340,870,364],
-		[840,490,1000,532],
-		[1200,350,1600,380],
-		[1400,520,1840,560],
-		[1780,260,2160,290],
-		[2100,390,2520,420],
-		[2500,200,2890,230],
-		[2880,300,3260,330],
-		[3220,550,3600,590],
-		[3600,410,4000,440],
-		[4280,550,4690,590]
+		[0, 643, 10000, 718], //x_start, y_start, x_end, y_end
+		[195, 460, 720, 505],
+		[50, 10, 650, 50],
+		[745, 250, 1300, 300],
+		[645, 100, 1050, 150],
+		[1600, 10, 2150, 40],
+		[1900, 400, 2400, 450],
+		[2450, 150, 2985, 200],
+		[1290, 100, 1680, 150],
+		[2200, 225, 2575, 325],
 	];
 	
 	enemies = [
@@ -50,14 +45,6 @@ function init_p2() {
             
 	bullets = [
 		[0,-1000,1], //x, y, and [0:not-active, 1:active]
-		[0,-1000,1],
-		[0,-1000,1],
-		[0,-1000,1],
-		[0,-1000,1],
-		[0,-1000,1],
-		[0,-1000,1],
-		[0,-1000,1],
-		[0,-1000,1],
 		[0,-1000,1],
 		[0,-1000,1],
 		[0,-1000,1],
@@ -96,12 +83,12 @@ function init_p2() {
 	enemy_count = 10;
 
 	for(i=0;i<bullets.length;i++) {
-		document.getElementById('the_bullets').innerHTML += '<div id="bullet' + i + '" style="position:absolute;top:0px;left:0px;z-index:600"><img style="opacity:1.0; visibility:visible;" src="images/minecraftSwordBullet.png" alt="bullet" id="dot_image"></div>';
+		document.getElementById('the_bullets').innerHTML += '<div id="bullet' + i + '" style="position:absolute;top:0px;left:0px;z-index:600"><img style="opacity:1.0; visibility:visible;" src="images/arrow.png" alt="bullet" id="dot_image"></div>';
 		bullets[i][1] = -1000.0;
 	}
 
 	for(i=0;i<e_bullets.length;i++) {
-		document.getElementById('the_bullets').innerHTML += '<div id="e_bullet' + i + '" style="position:absolute;top:0px;left:0px;z-index:600"><img style="opacity:1.0; visibility:visible;" src="images/minecraftSwordBullet.png" alt="bullet"></div>';
+		document.getElementById('the_bullets').innerHTML += '<div id="e_bullet' + i + '" style="position:absolute;top:0px;left:0px;z-index:600"><img style="opacity:1.0; visibility:visible;" src="images/arrow.png" alt="bullet"></div>';
 		e_bullets[i][1] = -1000.0;
 	}
 	
@@ -109,7 +96,7 @@ function init_p2() {
 		if(i<10) {
 			document.getElementById('the_enemies').innerHTML += '<div id="enemy' + i + '" style="position:absolute;top:0px;left:0px;z-index:700"><img id="enemy_image' + i + '" src="images/SoD_archer.png" width="90" style="position:relative;top:12px" /></div>';
 		} else {
-			document.getElementById('the_enemies').innerHTML += '<div id="enemy' + i + '" style="position:absolute;top:0px;left:0px;z-index:700"><img id="enemy_image' + i + '" src="images/SoD_melee.png" width="90" style="position:relative;top:12px" /></div>';
+			document.getElementById('the_enemies').innerHTML += '<div id="enemy' + i + '" style="position:absolute;top:0px;left:0px;z-index:700"><img id="enemy_image' + i + '" src="images/SoD_melee.gif" width="90" style="position:relative;top:12px" /></div>';
 		}
 	}
 	for (i=0;i<enemies.length;i++) {
