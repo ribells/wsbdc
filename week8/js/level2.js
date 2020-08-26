@@ -1,33 +1,15 @@
-/* function init_p1() {
+function init_l2() {
 	
 	document.getElementById('scene_text').innerHTML = 
-	"After Tobi kills the Bandit Leader, the rest of the bandits start to " +
-	"flee away from the forest<br/><br/>" +
-	"Tobi starts complaining towards Anthus about how irritating he was when " +
-	"he was fighting against the bandits<br/><br/>" +
-	"Anthus apologizes and begs to stay by his side";		
+	"TO BE CONTINUED...";		
 	
-	plats = [
-		[0,678,1000,718], //x_start, y_start, x_end, y_end
-		[380,568,570,588],
-		[100,500,290,520],
-		[410,410,540,430],
-		[60,310,250,330],
-		[460,270,575,290],
-		[100,70,400,100],
-		[840,510,1000,532],
-		[720,340,870,364],
-	];	
+	plats = [];	
 	
-	enemies = [
-		[0,678,1] //x, y, and [0:dead, 1:alive]
-	];
+	enemies = [];
             
 	bullets = [];
 	
-	e_bullets = [
-		// [0,-1000,-1] x, y, and [-1:not-active, 1:active]
-	];
+	e_bullets = [];
 	
 	enemy_count = 1;
 
@@ -63,9 +45,8 @@
 	}
 }	
 
-function prologue1() {
-	init_p1();
+function level2() {
+	init_l2();
 	cut_scene_active = true;
 	frameloop();
 }	
-*/
