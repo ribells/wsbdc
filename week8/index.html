@@ -58,7 +58,7 @@
 		<!--img style="position:relative;top:40px;left:-50px;opacity:1.0;visibility:hidden;z-index:10" src="images/cutscene_template.png" alt="Photo" id="cs_image" width="2200" height="790" /-->
 	</div>
 	<script language="javascript">
-	var level = 2;
+	var level = 0;
 	var cut_scene_active = true;
 	var sprite = document.getElementById("tobi");
 	var bgs = 0;  //the number of pixels the background has scrolled based on Tobi's movement to right or left
@@ -156,8 +156,8 @@
 	});
 
 	function init() {
-		//prologue1();
-		level1();
+		prologue1();
+		//level1();
 	}
 
 	function shoot(who) {
