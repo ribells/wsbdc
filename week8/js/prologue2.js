@@ -11,7 +11,7 @@ function init_p2() {
 	bx = -50;
 	by = 0;
 	score = 0;
-	health = 0;
+	health = 800;
 	green_knight_health = 800;
 	tobi_x = 100; 
 	tobi_y = 629;	
