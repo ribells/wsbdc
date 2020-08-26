@@ -284,13 +284,13 @@
 
 			if(level==0) { 
 				//check to see if near the bear
-				check_the_bear();	
-			} else if(enemy_count == 0 && level==1) {
+				check_the_bear();
+			} else if(enemy_count<=0 && level==1) {
 				//msc.play ();
 				//bg_sound.pause ();
-				document.getElementById('green_knight_image').style.visibility = 'visible';
-				enemy_count--;
-			} else if(enemy_count < 0 && level>1) {
+				level++;
+				level1();
+			} else if(enemy_count < 0 && level > 1) {
 				process_crab_boss(level);
 				if(powerup_active >= 0) {
 					process_powerup(level);
